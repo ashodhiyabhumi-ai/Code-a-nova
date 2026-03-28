@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)file:///C:/Users/MyPc/Desktop/trip%20project/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>AI Trip Planner Pro</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+    text-align: center;
+}
+
+.container {
+    background: white;
+    color: black;
+    padding: 20px;
+    width: 350px;
+    margin: 30px auto;
+    border-radius: 10px;
+}
+
+input, select {
+    width: 90%;
+    padding: 10px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    background: #667eea;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#result, #chatbox {
+    text-align: left;
+    margin-top: 15px;
+}
+
+.chat {
+    background: #eee;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🌍 AI Trip Planner Pro</h2>
+
+    <input type="text" id="destination" placeholder="Destination">
+    <input type="number" id="days" placeholder="Days">
+    <input type="number" id="budget" placeholder="Budget ₹">
+
+    <select id="type">
+        <option value="adventure">Adventure</option>
+        <option value="relax">Relax</option>
+        <option value="spiritual">Spiritual</option>
+    </select>
+
+    <button onclick="planTrip()">Plan Trip</button>
+    <button onclick="saveTrip()">Save</button>
+
+    <div id="result"></div>
+
+    <hr>
+
+    <h3>🤖 Chat Assistant</h3>
+    <input type="text" id="chatInput" placeholder="Ask something...">
+    <button onclick="chat()">Send</button>
+    <div id="chatbox"></div>
+</div>
+
+<script>
+function planTrip() {
+    let dest = document.getElementById("destination").value;
+    let days = document.getElementById("days").value;
+    let budget = document.getElementById("budget").value;
+    let type = document.getElementById("type").value;
+
+    let plan = `<h3>Trip to ${dest}</h3>`;
+
+    // AI-style itinerary
+    for (let i = 1; i <= days; i++) {
+        if (type === "adventure") {
+            plan += `<p>Day ${i}: Trekking, adventure sports 🏔</p>`;
+        } else if (type === "relax") {
+            plan += `<p>Day ${i}: Beach/relaxation 🏖</p>`;
+        } else {
+            plan += `<p>Day ${i}: मंदिर दर्शन & cultural visit 🛕</p>`;
+        }
+    }
+
+    // Budget logic
+    let perDay = budget / days;
+    plan += `<p><b>Per Day Budget:</b> ₹${perDay}</p>`;
+
+    if (budget < 5000) {
+        plan += "<p>💡 Use budget hotels & buses</p>";
+    } else {
+        plan += "<p>💡 Enjoy premium hotels & taxis</p>";
+    }
+
+    // Packing list
+    plan += "<h4>🎒 Packing List:</h4>";
+    if (type === "adventure") {
+        plan += "<p>Shoes, jacket, water bottle</p>";
+    } else if (type === "relax") {
+        plan += "<p>Sunscreen, sunglasses, flip-flops</p>";
+    } else {
+        plan += "<p>Traditional clothes, पूजा items</p>";
+    }
+
+    document.getElementById("result").innerHTML = plan;
+}
+
+// Save trip
+function saveTrip() {
+    let data = document.getElementById("result").innerHTML;
+    localStorage.setItem("tripPlan", data);
+    alert("Trip Saved!");
+}
+
+// Chatbot
+function chat() {
+    let input = document.getElementById("chatInput").value;
+    let reply = "";
+
+    if (input.includes("hello")) {
+        reply = "Hi! How can I help you?";
+    } else if (input.includes("budget")) {
+        reply = "Try to keep daily budget under control!";
+    } else if (input.includes("place")) {
+        reply = "Famous places depend on your destination 😊";
+    } else {
+        reply = "I am your travel assistant 🤖";
+    }
+
+    let chatbox = document.getElementById("chatbox");
+    chatbox.innerHTML += `<div class="chat">You: ${input}</div>`;
+    chatbox.innerHTML += `<div class="chat">Bot: ${reply}</div>`;
+}
+</script>
+
+
+</body></html>

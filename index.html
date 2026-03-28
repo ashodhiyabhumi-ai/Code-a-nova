@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Healthcare Management System</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #74ebd5, #9face6);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background: #333;
+            color: white;
+            padding: 15px;
+        }
+
+        .container {
+            width: 350px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px gray;
+        }
+
+        input {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 95%;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f1f1f1;
+            margin: 5px;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .delete {
+            background: red;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🏥 Healthcare Management System</h1>
+
+<div class="container">
+
+    <!-- Patient Section -->
+    <h2>Register Patient</h2>
+    <input type="text" id="name" placeholder="Enter Name">
+    <input type="number" id="age" placeholder="Enter Age">
+    <button onclick="addPatient()">Add Patient</button>
+
+    <h3>Patient List</h3>
+    <ul id="patientList"></ul>
+
+    <!-- Appointment Section -->
+    <h2>Book Appointment</h2>
+    <input type="text" id="patientName" placeholder="Patient Name">
+    <input type="text" id="doctorName" placeholder="Doctor Name">
+    <button onclick="bookAppointment()">Book Appointment</button>
+
+    <h3>Appointments</h3>
+    <ul id="appointmentsList"></ul>
+
+</div>
+
+<script>
+    let patients = [];
+    let appointments = [];
+
+    // Add Patient
+    function addPatient() {
+        let name = document.getElementById("name").value;
+        let age = document.getElementById("age").value;
+
+        if (name === "" || age === "") {
+            alert("Please fill all fields!");
+            return;
+        }
+
+        let patient = { name, age };
+        patients.push(patient);
+
+        displayPatients();
+
+        document.getElementById("name").value = "";
+        document.getElementById("age").value = "";
+    }
+
+    // Display Patients
+    function displayPatients() {
+        let list = document.getElementById("patientList");
+        list.innerHTML = "";
+
+        patients.forEach((p, index) => {
+            let li = document.createElement("li");
+            li.innerHTML = `${p.name} (Age: ${p.age})
+                <button class="delete" onclick="deletePatient(${index})">X</button>`;
+            list.appendChild(li);
+        });
+    }
+
+    // Delete Patient
+    function deletePatient(index) {
+        patients.splice(index, 1);
+        displayPatients();
+    }
+
+    // Book Appointment
+    function bookAppointment() {
+        let patient = document.getElementById("patientName").value;
+        let doctor = document.getElementById("doctorName").value;
+
+        if (patient === "" || doctor === "") {
+            alert("Please fill all fields!");
+            return;
+        }
+
+        let appointment = { patient, doctor };
+        appointments.push(appointment);
+
+        displayAppointments();
+
+        document.getElementById("patientName").value = "";
+        document.getElementById
